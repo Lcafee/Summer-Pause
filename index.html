@@ -156,7 +156,6 @@ h1,h2,h3{margin:0;color:var(--scarlet);line-height:1.6;font-weight:700}h1{font-f
         <button id="shareBtn">اشتراک نتیجه</button>
       </div>
       <button class="secondary" id="restartBtn">شروع دوباره</button>
-      <p class="result-note">اگر این پیشنهاد به حال‌وهوای امروزت می‌خوره، از طریق پرسنل سفارش بده؛ اگر نه، شروع دوباره رو بزن.</p>
     </section>
   </main>
 
@@ -303,10 +302,7 @@ function createMenuCard(line,item){
   image.fetchPriority='low';
   image.decoding='async';
   setProductImage(image,item.image,item.name);
-  const code=document.createElement('span');
-  code.className='menu-card-code';
-  code.textContent=item.code;
-  media.append(image,code);
+  media.append(image);
 
   const body=document.createElement('div');
   body.className='menu-card-body';
