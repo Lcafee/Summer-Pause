@@ -164,8 +164,9 @@
 
   function updateQuizScene() {
     if (state.quizStep === 1) {
-      setImage(elements.quizSceneImageA, productsByLine.icedtea[0].image, "");
-      setImage(elements.quizSceneImageB, productsByLine.refresher[0].image, "");
+      const [firstProduct, secondProduct] = randomProducts(2);
+      setImage(elements.quizSceneImageA, firstProduct.image, "");
+      setImage(elements.quizSceneImageB, secondProduct.image, "");
       return;
     }
     const lineProducts = productsByLine[state.selectedLine];
@@ -313,18 +314,14 @@
     setImage(image, product.image, `تصویر ${product.name}`);
     figure.append(image);
 
-    const stamp = document.createElement("div");
-    stamp.className = "menu-product-stamp";
-    stamp.innerHTML = `<span>PORTRAIT ${String(index + 1).padStart(2, "0")}</span>`;
-
     const price = document.createElement("strong");
     price.className = "menu-product-price";
     price.textContent = formatPrice(product.price);
-    frame.append(figure, stamp, price);
+    frame.append(figure, price);
 
     const content = document.createElement("div");
     content.className = "menu-product-copy";
-    content.innerHTML = `<p class="menu-product-sequence" dir="ltr">0${index + 1}</p><h3>${product.name}</h3><p class="menu-product-en" dir="ltr">${product.en}</p><p class="menu-product-description">${product.description}</p><ul class="menu-product-tags">${product.tags.map(tag => `<li>${tag}</li>`).join("")}</ul>`;
+    content.innerHTML = `<h3>${product.name}</h3><p class="menu-product-en" dir="ltr">${product.en}</p><p class="menu-product-description">${product.description}</p><ul class="menu-product-tags">${product.tags.map(tag => `<li>${tag}</li>`).join("")}</ul>`;
 
     article.append(frame, content);
     return article;
