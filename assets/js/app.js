@@ -327,7 +327,13 @@
     heading.className = "menu-product-heading";
     const title = content.querySelector("h3");
     title.before(heading);
-    heading.append(title, price);
+    heading.append(title);
+
+    const meta = document.createElement("div");
+    meta.className = "menu-product-meta";
+    const tags = content.querySelector(".menu-product-tags");
+    tags.before(meta);
+    meta.append(tags, price);
 
     article.append(frame, content);
     return article;

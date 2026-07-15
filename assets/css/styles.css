@@ -608,8 +608,9 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   font-size: 12px;
   box-shadow: 0 10px 24px rgba(0,0,0,.08);
 }
-.menu-product-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.menu-product-heading h3 { flex: 1 1 auto; }
+.menu-product-heading h3 { margin: 0; }
+.menu-product-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.menu-product-meta .menu-product-tags { flex: 1 1 auto; }
 .menu-product-copy {
   position: relative;
   z-index: 3;
