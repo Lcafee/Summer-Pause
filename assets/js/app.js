@@ -240,6 +240,7 @@
     document.documentElement.style.setProperty("--result-accent", line.accent);
     document.documentElement.style.setProperty("--result-ink", line.ink);
     elements.resultScreen.dataset.line = product.line;
+    elements.resultScreen.dataset.productCode = product.code;
     setImage(elements.resultImage, product.image, `تصویر ${product.name}`);
     elements.resultLineEn.textContent = line.name;
     elements.resultName.textContent = product.name;
@@ -253,6 +254,7 @@
       return item;
     }));
 
+    elements.encoreImage.dataset.productCode = encore.code;
     setImage(elements.encoreImage, encore.image, `تصویر ${encore.name}`);
     elements.encoreLine.textContent = encoreLine.fa;
     elements.encoreName.textContent = encore.name;
