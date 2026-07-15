@@ -35,8 +35,6 @@
     resultHomeButton: document.getElementById("resultHomeButton"),
     resultImage: document.getElementById("resultImage"),
     resultLineEn: document.getElementById("resultLineEn"),
-    resultLineNumber: document.getElementById("resultLineNumber"),
-    resultLine: document.getElementById("resultLine"),
     resultName: document.getElementById("resultName"),
     resultNameEn: document.getElementById("resultNameEn"),
     resultPrice: document.getElementById("resultPrice"),
@@ -244,8 +242,6 @@
     elements.resultScreen.dataset.line = product.line;
     setImage(elements.resultImage, product.image, `تصویر ${product.name}`);
     elements.resultLineEn.textContent = line.name;
-    elements.resultLineNumber.textContent = line.number;
-    elements.resultLine.textContent = line.fa;
     elements.resultName.textContent = product.name;
     elements.resultNameEn.textContent = product.en;
     elements.resultPrice.textContent = formatPrice(product.price);
