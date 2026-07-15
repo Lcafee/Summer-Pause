@@ -317,11 +317,17 @@
     const price = document.createElement("strong");
     price.className = "menu-product-price";
     price.textContent = formatPrice(product.price);
-    frame.append(figure, price);
+    frame.append(figure);
 
     const content = document.createElement("div");
     content.className = "menu-product-copy";
     content.innerHTML = `<h3>${product.name}</h3><p class="menu-product-en" dir="ltr">${product.en}</p><p class="menu-product-description">${product.description}</p><ul class="menu-product-tags">${product.tags.map(tag => `<li>${tag}</li>`).join("")}</ul>`;
+
+    const heading = document.createElement("div");
+    heading.className = "menu-product-heading";
+    const title = content.querySelector("h3");
+    title.before(heading);
+    heading.append(title, price);
 
     article.append(frame, content);
     return article;

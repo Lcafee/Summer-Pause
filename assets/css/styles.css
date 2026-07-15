@@ -140,6 +140,15 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   color: inherit;
   font-size: 13px;
 }
+.action--outlined {
+  width: fit-content;
+  min-height: 44px;
+  margin: 10px auto 0;
+  padding-inline: 16px;
+  border: 1px solid rgba(255,255,255,.44);
+  border-radius: 14px;
+  background: rgba(255,255,255,.05);
+}
 .action--dark { color: #fff; background: linear-gradient(180deg, #511523, #2d0911); }
 .action--dark .action-copy small { color: rgba(255,255,255,.65); }
 .action--dark .action-icon { background: #f3e6d8; color: var(--wine); }
@@ -588,9 +597,9 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
 }
 .menu-product-stamp span { color: rgba(84,70,67,.66); font: 700 8px/1 var(--sans-en); letter-spacing: 1.5px; }
 .menu-product-price {
-  position: absolute;
-  z-index: 2;
-  inset: auto 16px 18px auto;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
   padding: 9px 12px;
   border-radius: 999px;
   background: rgba(255,255,255,.72);
@@ -599,6 +608,8 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   font-size: 12px;
   box-shadow: 0 10px 24px rgba(0,0,0,.08);
 }
+.menu-product-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.menu-product-heading h3 { flex: 1 1 auto; }
 .menu-product-copy {
   position: relative;
   z-index: 3;
