@@ -145,14 +145,30 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   font-size: 13px;
 }
 .action--outlined {
+  position: relative;
+  overflow: hidden;
   width: fit-content;
-  min-height: 44px;
+  min-height: 48px;
   margin: 10px auto 0;
-  padding-inline: 16px;
-  border: 1px solid rgba(255,255,255,.44);
+  padding-inline: 22px;
+  border: 1px solid rgba(255,255,255,.48);
   border-radius: 14px;
-  background: rgba(255,255,255,.05);
+  background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.035));
+  color: #fff9f1;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 12px 28px rgba(9,1,3,.16), inset 0 1px 0 rgba(255,255,255,.38), inset 0 -1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(18px) saturate(155%) brightness(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(155%) brightness(1.08);
 }
+.action--outlined::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.2), transparent 30%, transparent 76%, rgba(255,255,255,.04));
+}
+.action--outlined span { position: relative; z-index: 1; font-weight: 800; }
 .action--dark { color: #fff; background: linear-gradient(180deg, #511523, #2d0911); }
 .action--dark .action-copy small { color: rgba(255,255,255,.65); }
 .action--dark .action-icon { background: #f3e6d8; color: var(--wine); }
@@ -775,14 +791,30 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   position: relative;
   overflow: hidden;
   margin: 0 12px;
-  border: 1px solid rgba(255,230,217,.2);
+  border: 1px solid rgba(255,255,255,.3);
   border-radius: 32px;
-  background:
-    radial-gradient(circle at 15% 0, color-mix(in srgb, var(--chapter-accent) 16%, transparent), transparent 32%),
-    linear-gradient(145deg, rgba(103,22,44,.62), rgba(43,6,15,.56));
-  box-shadow: 0 24px 54px rgba(17,2,6,.22), inset 0 1px 0 rgba(255,255,255,.09);
-  backdrop-filter: blur(22px) saturate(122%);
-  -webkit-backdrop-filter: blur(22px) saturate(122%);
+  background: linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.012) 48%, rgba(255,255,255,.035));
+  box-shadow:
+    0 28px 58px rgba(12,1,4,.18),
+    inset 0 1px 0 rgba(255,255,255,.42),
+    inset 1px 0 0 rgba(255,255,255,.13),
+    inset -1px 0 0 rgba(255,255,255,.055),
+    inset 0 -1px 0 rgba(255,255,255,.1);
+  backdrop-filter: blur(18px) saturate(165%) brightness(1.08) contrast(1.04);
+  -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(1.08) contrast(1.04);
+}
+.menu-product::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 88%;
+  height: 42%;
+  top: -24%;
+  left: -25%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(255,255,255,.3) 0%, rgba(255,255,255,.095) 38%, transparent 72%);
+  filter: blur(7px);
 }
 .menu-product::after {
   content: "";
@@ -790,7 +822,11 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(118deg, rgba(255,255,255,.075), transparent 34%);
+  border-radius: inherit;
+  background:
+    linear-gradient(112deg, rgba(255,255,255,.18), transparent 20%, transparent 76%, rgba(255,255,255,.055)),
+    radial-gradient(ellipse at 88% 8%, rgba(255,255,255,.1), transparent 27%),
+    linear-gradient(180deg, transparent 76%, rgba(255,255,255,.025));
 }
 .menu-product > * { position: relative; z-index: 1; }
 .menu-product-frame {
@@ -809,11 +845,14 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
 .menu-product-frame::after {
   content: "";
   position: absolute;
-  inset: 15px 14px 12px;
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 28px;
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0));
-  opacity: .7;
+  inset: 1px 1px 0;
+  border: 0;
+  border-radius: 31px 31px 0 0;
+  background:
+    radial-gradient(ellipse at 16% 0, rgba(255,255,255,.15), transparent 33%),
+    linear-gradient(112deg, rgba(255,255,255,.07), transparent 28%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+  opacity: 1;
 }
 .menu-product--reverse .menu-product-frame::before { left: auto; right: 12%; }
 .menu-product-image { position: absolute; inset: 0; margin: 0; }
@@ -824,12 +863,14 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   align-items: center;
   padding: 9px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,.09);
-  border: 1px solid rgba(214,176,122,.22);
+  background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.025));
+  border: 1px solid rgba(255,255,255,.21);
   color: #fff4e8;
   font-size: 12px;
   white-space: nowrap;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 22px rgba(12,1,4,.06);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
 }
 .menu-product-heading h3 { margin: 0; }
 .menu-product-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -839,23 +880,39 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   z-index: 3;
   margin: -22px 14px 14px;
   padding: 21px 18px 19px;
-  border: 1px solid rgba(255,237,226,.16);
+  overflow: hidden;
+  border: 0;
   border-radius: 25px;
-  background: linear-gradient(135deg, rgba(255,255,255,.125), rgba(255,255,255,.055));
-  box-shadow: 0 16px 34px rgba(14,1,5,.16), inset 0 1px 0 rgba(255,255,255,.07);
-  backdrop-filter: blur(18px) saturate(118%);
-  -webkit-backdrop-filter: blur(18px) saturate(118%);
+  background:
+    radial-gradient(ellipse at 8% 0, rgba(255,255,255,.075), transparent 38%),
+    linear-gradient(180deg, rgba(255,255,255,.012), rgba(255,255,255,.035));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(255,255,255,.035);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
+.menu-product-copy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, rgba(255,255,255,.075), transparent 28%, transparent 78%, rgba(255,255,255,.02)),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.13) 50%, transparent) top / 76% 1px no-repeat;
+}
+.menu-product-copy > * { position: relative; z-index: 1; }
 .menu-product--reverse .menu-product-copy { margin: -22px 14px 14px; }
 .menu-product h3 { margin: 0; color: #fff7ed; font-size: 28px; line-height: 1.45; letter-spacing: -.4px; }
 .menu-product-en { margin: 3px 0 0; color: color-mix(in srgb, var(--chapter-accent) 74%, #fff0df 26%); font: italic 13px/1.45 var(--serif); text-align: left; }
 .menu-product-description { margin: 15px 0 18px; color: rgba(255,241,230,.76); font-size: 14px; line-height: 2.08; }
 .menu-product .menu-product-tags li {
   padding: 7px 10px;
-  border-color: rgba(214,176,122,.2);
-  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.17);
+  background: linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.018));
   color: rgba(255,244,232,.9);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
 }
 .menu-footer {
   position: relative;
