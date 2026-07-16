@@ -1,6 +1,6 @@
 :root {
   --wine: #4b0d1a;
-  --wine-deep: #22070d;
+  --wine-deep: #340b16;
   --wine-soft: #6f2030;
   --ivory: #f5eee3;
   --paper: #f1e7d8;
@@ -9,10 +9,10 @@
   --muted: #6c5c5a;
   --line: rgba(58, 33, 31, .16);
   --gold: #d6b07a;
-  --glass-fill: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.012) 48%, rgba(255,255,255,.035));
-  --glass-fill-strong: linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.028) 52%, rgba(255,255,255,.06));
-  --glass-border: rgba(255,255,255,.3);
-  --glass-border-soft: rgba(255,255,255,.2);
+  --glass-fill: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.025) 48%, rgba(255,255,255,.055));
+  --glass-fill-strong: linear-gradient(145deg, rgba(255,255,255,.17), rgba(255,255,255,.05) 52%, rgba(255,255,255,.09));
+  --glass-border: rgba(255,255,255,.34);
+  --glass-border-soft: rgba(255,255,255,.24);
   --glass-shadow: 0 22px 48px rgba(12,1,4,.16), inset 0 1px 0 rgba(255,255,255,.38), inset 0 -1px 0 rgba(255,255,255,.07);
   --glass-filter: blur(18px) saturate(160%) brightness(1.07) contrast(1.03);
   --result-accent: #a9aa62;
@@ -35,7 +35,7 @@ body {
   font-family: var(--sans-fa);
   background:
     radial-gradient(circle at 50% -10%, rgba(157, 73, 96, .55) 0, transparent 40%),
-    linear-gradient(180deg, #47101c 0%, #22070d 100%);
+    linear-gradient(180deg, #5b1729 0%, #340b16 100%);
   overflow-x: hidden;
 }
 button, a { -webkit-tap-highlight-color: transparent; }
@@ -192,7 +192,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background:
     radial-gradient(circle at 30% 15%, rgba(232, 175, 101, .18) 0, transparent 30%),
     radial-gradient(circle at 75% 22%, rgba(173, 75, 100, .24) 0, transparent 38%),
-    linear-gradient(180deg, #531423 0%, #27070d 62%, #1e050a 100%);
+    linear-gradient(180deg, #681b30 0%, #44101e 62%, #330b16 100%);
 }
 .home-backdrop,
 .quiz-scene,
@@ -221,7 +221,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(35, 3, 10, .06) 0%, rgba(35, 3, 10, .16) 35%, rgba(35,3,10,.64) 70%, #1f060b 100%);
+  background: linear-gradient(180deg, rgba(52, 9, 20, .04) 0%, rgba(52, 9, 20, .12) 35%, rgba(52,9,20,.5) 70%, #320b16 100%);
 }
 .home-frame,
 .menu-cover-frame { position: absolute; margin: 0; }
@@ -272,7 +272,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   position: absolute;
   width: 110%; height: 34%;
   left: -5%; bottom: 0;
-  background: linear-gradient(180deg, transparent, rgba(24, 2, 7, .9));
+  background: linear-gradient(180deg, transparent, rgba(52, 9, 20, .72));
 }
 .home-brand { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: calc(18px + var(--safe-top)) 20px 0; position: relative; z-index: 2; direction: ltr; }
 .home-copy { margin-top: auto; padding: 42vh 22px 0; position: relative; z-index: 2; }
@@ -294,7 +294,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background:
     radial-gradient(circle at 20% 15%, rgba(218, 176, 122, .18) 0, transparent 28%),
     radial-gradient(circle at 78% 24%, rgba(167, 83, 110, .25) 0, transparent 34%),
-    linear-gradient(180deg, #360b14 0%, #1d050a 100%);
+    linear-gradient(180deg, #4b1222 0%, #300a14 100%);
 }
 .quiz-scene::before {
   width: 64%; height: 28%;
@@ -303,7 +303,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
 }
 .quiz-scene::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(20,0,5,.1), rgba(24,2,7,.24) 40%, rgba(24,2,7,.78) 76%, #1b0409 100%);
+  background: linear-gradient(180deg, rgba(48,8,19,.07), rgba(48,8,19,.18) 40%, rgba(45,9,19,.62) 76%, #2d0913 100%);
 }
 .quiz-scene-image { position: absolute; aspect-ratio: 1; transition: .45s ease; }
 .quiz-scene-image--a { width: 78%; top: 6%; left: -20%; animation: drift-c 8s ease-in-out infinite; }
@@ -347,7 +347,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   color: #fff;
   background:
     radial-gradient(circle at 50% 26%, rgba(238, 196, 136, .22) 0, transparent 26%),
-    linear-gradient(180deg, #46111f 0%, #20060b 100%);
+    linear-gradient(180deg, #5a172a 0%, #340b17 100%);
 }
 .reveal-image-wrap { z-index: 1; inset: 4% 0 28% 0; }
 .reveal-image-wrap::before {
@@ -363,7 +363,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   position: absolute;
   inset: auto 0 0 0;
   height: 40%;
-  background: linear-gradient(180deg, transparent, rgba(21,2,7,.55) 35%, #20060b 100%);
+  background: linear-gradient(180deg, transparent, rgba(52,9,20,.44) 35%, #340b17 100%);
 }
 .reveal-copy { position: relative; z-index: 2; padding: 0 24px 10vh; text-align: center; text-shadow: 0 2px 18px rgba(0,0,0,.35); }
 .reveal-copy p { margin: 0 0 14px; font: 700 10px/1 var(--sans-en); letter-spacing: 2.6px; color: rgba(255,239,219,.8); }
@@ -375,7 +375,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background:
     radial-gradient(circle at 82% 34%, color-mix(in srgb, var(--result-accent) 15%, transparent), transparent 28%),
     radial-gradient(circle at 14% 66%, rgba(157,46,72,.2), transparent 30%),
-    linear-gradient(180deg, #561426 0%, #330813 48%, #1d040a 100%);
+    linear-gradient(180deg, #68182f 0%, #481020 48%, #300a14 100%);
 }
 .result-hero {
   min-height: max(760px, 100vh);
@@ -387,7 +387,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background:
     radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--result-accent) 36%, transparent) 0, transparent 25%),
     radial-gradient(circle at 18% 18%, rgba(255,223,168,.16) 0, transparent 28%),
-    linear-gradient(180deg, #531123 0%, #350914 62%, rgba(29,4,10,.18) 100%);
+    linear-gradient(180deg, #64162b 0%, #4a1122 62%, rgba(48,10,20,.2) 100%);
 }
 .result-backdrop::before {
   width: 72%; height: 28%;
@@ -402,7 +402,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background: radial-gradient(circle, rgba(255,255,255,.08), transparent 65%);
   filter: blur(12px);
 }
-.result-film { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,0,5,.02), rgba(20,0,5,.14) 48%, rgba(20,0,5,.64) 78%, rgba(20,0,5,.18) 100%); }
+.result-film { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(48,8,18,.01), rgba(48,8,18,.1) 48%, rgba(45,9,19,.52) 78%, rgba(48,10,20,.14) 100%); }
 .result-header { z-index: 6; }
 .result-ghost {
   position: absolute;
@@ -646,7 +646,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
 .result-actions {
   padding: 22px 18px calc(32px + var(--safe-bottom));
   border-top: 1px solid rgba(255,237,226,.1);
-  background: linear-gradient(180deg, rgba(29,4,10,.2), rgba(18,2,6,.54));
+  background: linear-gradient(180deg, rgba(48,10,20,.14), rgba(39,8,17,.42));
 }
 .result-actions .action--dark {
   color: #4b0d1a;
@@ -674,7 +674,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background:
     radial-gradient(circle at 88% 22%, rgba(190,74,102,.2), transparent 26%),
     radial-gradient(circle at 8% 58%, rgba(214,176,122,.12), transparent 28%),
-    linear-gradient(180deg, #521222 0%, #340813 42%, #21050b 100%);
+    linear-gradient(180deg, #64162c 0%, #491020 42%, #320b17 100%);
 }
 .menu-cover {
   min-height: max(700px, 100vh);
@@ -688,7 +688,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   background:
     radial-gradient(circle at 32% 18%, rgba(222,173,105,.18) 0, transparent 27%),
     radial-gradient(circle at 76% 20%, rgba(190,74,102,.28) 0, transparent 36%),
-    linear-gradient(180deg, #591526 0%, #330812 68%, #21050b 100%);
+    linear-gradient(180deg, #6a1b31 0%, #48101f 68%, #320b17 100%);
 }
 .menu-cover-gallery::before {
   width: 68%; height: 26%;
@@ -699,7 +699,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(32,3,10,.06) 0%, rgba(32,3,10,.18) 38%, rgba(28,4,9,.7) 73%, rgba(33,5,11,.94) 100%);
+  background: linear-gradient(180deg, rgba(50,8,19,.04) 0%, rgba(50,8,19,.13) 38%, rgba(48,9,19,.56) 73%, rgba(50,11,23,.82) 100%);
 }
 .menu-cover-frame--one { width: 74%; aspect-ratio: 1; top: 12%; left: -9%; animation: drift-c 8.6s ease-in-out infinite; }
 .menu-cover-frame--two { width: 58%; aspect-ratio: 1; top: 4%; right: -10%; animation: drift-b 9s ease-in-out infinite; }
@@ -738,7 +738,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   padding: 20px 0 22px;
   background:
     radial-gradient(circle at 90% 12%, rgba(196,82,108,.15), transparent 25%),
-    linear-gradient(180deg, rgba(33,5,11,.98), #310711 42%, #21050b 100%);
+    linear-gradient(180deg, rgba(55,11,24,.96), #471021 42%, #320b17 100%);
 }
 .menu-chapters::before {
   content: "";
@@ -934,7 +934,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   color: #fff;
   background:
     radial-gradient(circle at 50% 0, rgba(178,65,91,.14), transparent 36%),
-    linear-gradient(180deg, #21050b 0%, #150205 100%);
+    linear-gradient(180deg, #320b17 0%, #280811 100%);
 }
 .menu-footer img { width: 118px; margin: 0 auto 17px; filter: brightness(0) invert(1); }
 .menu-footer p { margin: 0 0 25px; color: #dcbfa9; font: 700 10px/1 var(--sans-en); letter-spacing: 2.2px; }
@@ -986,13 +986,13 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
     background:
       radial-gradient(circle at 82% 34%, rgba(169,170,98,.15), transparent 28%),
       radial-gradient(circle at 14% 66%, rgba(157,46,72,.2), transparent 30%),
-      linear-gradient(180deg, #561426 0%, #330813 48%, #1d040a 100%);
+      linear-gradient(180deg, #68182f 0%, #481020 48%, #300a14 100%);
   }
   .result-hero {
     background:
       radial-gradient(circle at 50% 22%, rgba(169,170,98,.36) 0, transparent 25%),
       radial-gradient(circle at 18% 18%, rgba(255,223,168,.16) 0, transparent 28%),
-      linear-gradient(180deg, #531123 0%, #350914 62%, rgba(29,4,10,.18) 100%);
+      linear-gradient(180deg, #64162b 0%, #4a1122 62%, rgba(48,10,20,.2) 100%);
   }
   .result-backdrop::before { background: radial-gradient(circle, rgba(194,194,139,.5) 0, transparent 68%); }
   .result-name-en { color: #d8d7ad; }
@@ -1167,7 +1167,7 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   .menu-chapter-head,
   .menu-product,
   .menu-footer button {
-    background-color: rgba(63,8,21,.82);
+    background-color: rgba(78,16,35,.82);
     background-image: none;
   }
 }
