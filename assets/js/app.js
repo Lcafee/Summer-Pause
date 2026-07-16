@@ -276,17 +276,29 @@
       chapter.style.setProperty("--chapter-accent", line.accent);
       chapter.style.setProperty("--chapter-ink", line.ink);
       const chapterTitle = document.createElement("h2");
-      chapterTitle.className = "sr-only";
+      chapterTitle.className = "menu-chapter-title";
       chapterTitle.id = `chapter-title-${line.key}`;
       chapterTitle.textContent = line.fa;
       chapter.setAttribute("aria-labelledby", chapterTitle.id);
+      const chapterHead = document.createElement("header");
+      chapterHead.className = "menu-chapter-head";
+      const chapterHeading = document.createElement("div");
+      chapterHeading.className = "menu-chapter-heading";
+      const chapterKicker = document.createElement("span");
+      chapterKicker.className = "menu-chapter-kicker";
+      chapterKicker.dir = "ltr";
+      chapterKicker.textContent = line.name;
+      chapterHeading.append(chapterKicker, chapterTitle);
+      const chapterIntro = document.createElement("p");
+      chapterIntro.textContent = line.intro;
+      chapterHead.append(chapterHeading, chapterIntro);
       const productsWrap = document.createElement("div");
       productsWrap.className = "chapter-products";
       productsByLine[line.key].forEach((product, productIndex) => {
         productsWrap.append(createMenuProduct(product, productIndex, imageIndex));
         imageIndex += 1;
       });
-      chapter.append(chapterTitle, productsWrap);
+      chapter.append(chapterHead, productsWrap);
       fragment.append(chapter);
     });
 
@@ -306,7 +318,7 @@
     const image = document.createElement("img");
     image.width = 1254;
     image.height = 1254;
-    image.loading = "eager";
+    image.loading = imageIndex < 2 ? "eager" : "lazy";
     image.fetchPriority = imageIndex < 2 ? "high" : "low";
     image.decoding = "async";
     setImage(image, product.image, `تصویر ${product.name}`);
