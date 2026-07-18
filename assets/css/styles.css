@@ -15,9 +15,8 @@
   --glass-border-soft: rgba(255,255,255,.24);
   --glass-shadow: 0 22px 48px rgba(12,1,4,.16), inset 0 1px 0 rgba(255,255,255,.38), inset 0 -1px 0 rgba(255,255,255,.07);
   --glass-filter: blur(18px) saturate(160%) brightness(1.07) contrast(1.03);
-  --screen-enter-duration: 360ms;
-  --screen-exit-duration: 160ms;
-  --transition-wash-duration: 520ms;
+  --screen-enter-duration: 560ms;
+  --screen-exit-duration: 420ms;
   --result-accent: #a9aa62;
   --result-ink: #3a251f;
   --serif: "Libre Baskerville", Georgia, "Times New Roman", serif;
@@ -60,51 +59,70 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   overflow: clip;
   box-shadow: 0 0 120px rgba(0, 0, 0, .4);
 }
-.app-shell::after {
-  content: "";
+.transition-pattern {
   position: fixed;
   z-index: 900;
   inset: 0 auto 0 50%;
   width: min(100vw, 480px);
   pointer-events: none;
   opacity: 0;
-  transform: translateX(-50%) scale(1.025);
+  visibility: hidden;
+  overflow: hidden;
+  transform: translateX(-50%);
+  isolation: isolate;
+}
+.transition-pattern::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
   background:
-    radial-gradient(circle at 50% 42%, rgba(226, 177, 106, .22) 0, rgba(226, 177, 106, .07) 24%, transparent 52%),
-    radial-gradient(circle at 78% 18%, rgba(184, 72, 102, .3) 0, transparent 38%),
-    linear-gradient(145deg, #6b1a32 0%, #47101f 48%, #2d0913 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(214,176,122,.16);
+    radial-gradient(circle at 72% 22%, rgba(135, 45, 70, .3), transparent 38%),
+    radial-gradient(circle at 18% 78%, rgba(32, 5, 13, .32), transparent 44%),
+    linear-gradient(155deg, #5a1629 0%, #450e1e 52%, #310914 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  clip-path: inset(100% 0 0 0);
 }
-html.is-screen-transitioning .app-shell::after {
-  will-change: opacity, transform;
-  animation: transition-wash var(--transition-wash-duration) cubic-bezier(.4,0,.2,1) both;
-}
-.transition-brand {
-  position: fixed;
-  z-index: 901;
-  top: 50%;
-  left: 50%;
-  width: 98px;
-  height: 134px;
-  pointer-events: none;
-  opacity: 0;
-  color: #e3bd83;
-  transform: translate(-50%, -50%) scale(.88) rotate(-2deg);
-  transform-origin: 50% 55%;
-}
-.transition-brand svg {
-  display: block;
+.transition-pattern__grid {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  overflow: visible;
-  fill: currentColor;
-  filter: drop-shadow(0 8px 16px rgba(25,2,8,.32));
+  opacity: 0;
+  background: url("../brand/lcafe-transition-pattern.svg") 50% 0 / 200px 200px repeat;
+  clip-path: inset(100% 0 0 0);
 }
-html.is-screen-transitioning .transition-brand {
-  will-change: opacity, transform;
-  animation: transition-brand-reveal var(--transition-wash-duration) cubic-bezier(.4,0,.2,1) both;
+.transition-pattern__label {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  color: rgba(255,247,232,.9);
+  text-shadow: 0 4px 18px rgba(20,1,6,.42);
+  font: 700 8px/1 var(--sans-en);
+  letter-spacing: 2.8px;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) scale(.94);
 }
-.screen { min-height: 100vh; min-height: 100dvh; position: relative; }
+html.is-screen-transitioning .transition-pattern {
+  opacity: 1;
+  visibility: visible;
+}
+html.is-screen-transitioning .transition-pattern::before {
+  will-change: clip-path, transform;
+  animation: transition-pattern-curtain 980ms cubic-bezier(.76,0,.24,1) both;
+}
+html.is-screen-transitioning .transition-pattern__grid {
+  will-change: clip-path, transform;
+  animation:
+    transition-pattern-curtain 980ms cubic-bezier(.76,0,.24,1) both,
+    transition-pattern-field 980ms cubic-bezier(.4,0,.2,1) both;
+}
+html.is-screen-transitioning .transition-pattern__label {
+  animation: transition-pattern-label 980ms cubic-bezier(.4,0,.2,1) both;
+}
+.screen { min-height: 100vh; min-height: 100dvh; position: relative; contain: layout style paint; }
 .screen[hidden] { display: none !important; }
 .screen.is-active { animation: screen-in var(--screen-enter-duration) cubic-bezier(.2,.8,.2,1) both; }
 .screen.is-leaving { animation: screen-out var(--screen-exit-duration) ease-in both; pointer-events: none; }
@@ -116,15 +134,20 @@ html.is-screen-transitioning { scroll-behavior: auto; }
 
 @keyframes screen-in { from { opacity: 0; transform: translateY(12px) scale(.995); } to { opacity: 1; transform: none; } }
 @keyframes screen-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-4px); } }
-@keyframes transition-wash {
-  0% { opacity: 0; transform: translateX(-50%) scale(1.025); }
-  28%, 36% { opacity: 1; transform: translateX(-50%) scale(1); }
-  100% { opacity: 0; transform: translateX(-50%) scale(.992); }
+@keyframes transition-pattern-curtain {
+  0% { clip-path: inset(100% 0 0 0); transform: translateY(2%) scale(1.01); }
+  34%, 64% { clip-path: inset(0 0 0 0); transform: none; }
+  100% { clip-path: inset(0 0 100% 0); transform: translateY(-2%) scale(1.01); }
 }
-@keyframes transition-brand-reveal {
-  0%, 17% { opacity: 0; transform: translate(-50%, -50%) scale(.88) rotate(-2deg); }
-  31%, 52% { opacity: .96; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.07) rotate(1deg); }
+@keyframes transition-pattern-field {
+  0% { opacity: 0; background-position: 50% 18px; }
+  34%, 68% { opacity: .92; }
+  100% { opacity: 0; background-position: 50% -18px; }
+}
+@keyframes transition-pattern-label {
+  0%, 38% { opacity: 0; transform: translate(-50%, calc(-50% + 5px)); }
+  45%, 55% { opacity: 1; transform: translate(-50%, -50%); }
+  64%, 100% { opacity: 0; transform: translate(-50%, calc(-50% - 5px)); }
 }
 @keyframes drift-a { 0%, 100% { transform: translate3d(0,0,0) rotate(-6deg); } 50% { transform: translate3d(0,-8px,0) rotate(-3deg); } }
 @keyframes drift-b { 0%, 100% { transform: translate3d(0,0,0) rotate(8deg); } 50% { transform: translate3d(0,7px,0) rotate(11deg); } }
@@ -269,7 +292,7 @@ html.is-document-hidden .home-light {
 .quiz-scene,
 .reveal-image-wrap,
 .menu-cover-gallery,
-.result-backdrop { position: absolute; inset: 0; }
+.result-backdrop { position: absolute; inset: 0; contain: layout paint; }
 .home-backdrop::before,
 .quiz-scene::before,
 .menu-cover-gallery::before,
@@ -586,6 +609,8 @@ html.is-document-hidden .home-light {
   padding: 34px 20px 28px;
   color: #fff4e8;
   background: transparent;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
 }
 .result-story > * { position: relative; z-index: 1; }
 .result-story-head,
@@ -718,6 +743,8 @@ html.is-document-hidden .home-light {
   padding: 22px 18px calc(32px + var(--safe-bottom));
   border-top: 1px solid rgba(255,237,226,.1);
   background: linear-gradient(180deg, rgba(48,10,20,.14), rgba(39,8,17,.42));
+  content-visibility: auto;
+  contain-intrinsic-size: auto 190px;
 }
 .result-actions .action--dark {
   color: #4b0d1a;
@@ -885,6 +912,8 @@ html.is-document-hidden .home-light {
     inset 0 -1px 0 rgba(255,255,255,.1);
   backdrop-filter: blur(18px) saturate(165%) brightness(1.08) contrast(1.04);
   -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(1.08) contrast(1.04);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 610px;
 }
 .menu-product::before {
   content: "";
@@ -1006,6 +1035,8 @@ html.is-document-hidden .home-light {
   background:
     radial-gradient(circle at 50% 0, rgba(178,65,91,.14), transparent 36%),
     linear-gradient(180deg, #320b17 0%, #280811 100%);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 250px;
 }
 .menu-footer img { width: 118px; margin: 0 auto 17px; filter: brightness(0) invert(1); }
 .menu-footer p { margin: 0 0 25px; color: #dcbfa9; font: 700 10px/1 var(--sans-en); letter-spacing: 2.2px; }
@@ -1267,6 +1298,8 @@ html.is-document-hidden .home-light {
 
 @media (orientation: landscape) and (max-height: 520px) {
   .app-shell { width: min(100%, 760px); }
+  .transition-pattern { width: min(100vw, 760px); }
+  .transition-pattern__grid { background-size: 190px 190px; }
   .home-screen, .quiz-screen { min-height: 620px; }
   .home-copy { padding-top: 220px; }
   .quiz-content { padding-top: 150px; }

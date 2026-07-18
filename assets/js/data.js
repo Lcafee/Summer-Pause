@@ -52,7 +52,7 @@ const CAFE_PRODUCTS = [
   },
   {
     code: "IT-02", line: "icedtea", name: "آیس‌تی پیچ بلک", en: "Peach Black Tea Iced",
-    image: "assets/images/it-01.webp", price: 350000, mood: "Fruity · Balanced · Tea-led",
+    image: "assets/images/it-02.webp", price: 350000, mood: "Fruity · Balanced · Tea-led",
     description: "ترکیب چای سرد سیاه و هلو با بافتی خنک و طعمی آشنا؛ انتخابی خوش‌عطر، متعادل و تابستانی برای کسانی که نوشیدنی‌ای امن و دلنشین می‌خواهند.",
     tags: ["هلویی", "تابستان گرم", "متعادل"]
   },

@@ -71,8 +71,10 @@
   let screenExitTimer = 0;
   let screenUnlockTimer = 0;
   let menuBuilt = false;
-  const SCREEN_EXIT_DURATION = 160;
-  const SCREEN_ENTER_DURATION = 360;
+  const warmedImageSources = new Set();
+  const SCREEN_EXIT_DURATION = 420;
+  const SCREEN_ENTER_DURATION = 560;
+  const INITIAL_HERO_CODE = "IT-01";
   const RESPONSIVE_IMAGE_PATTERN = /\.webp$/i;
 
   function toPersianDigits(value) {
@@ -105,6 +107,21 @@
     imageElement.alt = altText !== undefined && altText !== null ? altText : "تصویر نوشیدنی L Cafe";
   }
 
+  function warmImage(source) {
+    if (!source || warmedImageSources.has(source)) return;
+    warmedImageSources.add(source);
+    const image = new Image();
+    image.decoding = "async";
+    image.fetchPriority = "low";
+    image.sizes = "(max-width: 480px) 100vw, 480px";
+    if (RESPONSIVE_IMAGE_PATTERN.test(source)) {
+      const baseSource = source.replace(RESPONSIVE_IMAGE_PATTERN, "");
+      image.srcset = `${baseSource}-640.webp 640w, ${baseSource}-960.webp 960w, ${source} 1254w`;
+    }
+    image.src = source;
+    if (typeof image.decode === "function") image.decode().catch(() => {});
+  }
+
   function randomProducts(count) {
     const linePools = Object.values(productsByLine);
     for (let index = linePools.length - 1; index > 0; index -= 1) {
@@ -121,6 +138,21 @@
       if ("fetchPriority" in image) image.fetchPriority = index === 0 ? "high" : "low";
       setImage(image, product.image, "");
     });
+  }
+
+  function renderInitialShowcase() {
+    const hero = productByCode.get(INITIAL_HERO_CODE) || CAFE_PRODUCTS[0];
+    const supportingProducts = randomProducts(3).filter(product => product.code !== hero.code).slice(0, 2);
+    setImage(elements.homeShowcaseImages[0], hero.image, "");
+    supportingProducts.forEach((product, index) => setImage(elements.homeShowcaseImages[index + 1], product.image, ""));
+  }
+
+  function deferNonCriticalWork(callback) {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(callback, { timeout: 1800 });
+      return;
+    }
+    window.setTimeout(callback, 800);
   }
 
   function initMotionBudget() {
@@ -197,8 +229,6 @@
     }
 
     if (currentScreen === nextScreen) {
-      state.screenTransitioning = true;
-      document.documentElement.classList.add("is-screen-transitioning");
       activateNextScreen();
       return;
     }
@@ -258,10 +288,12 @@
     if (state.quizStep === 1) {
       state.selectedLine = answer.line;
       state.quizStep = 2;
+      productsByLine[answer.line].forEach(product => warmImage(product.image));
       scheduleTransition(renderQuizStep, state.reducedMotion ? 0 : 170);
       return;
     }
     state.resultCode = answer.resultCode;
+    warmImage(productByCode.get(answer.resultCode)?.image);
     scheduleTransition(() => revealResult(answer.resultCode), state.reducedMotion ? 0 : 170);
   }
 
@@ -348,7 +380,6 @@
 
   function buildMenu() {
     const fragment = document.createDocumentFragment();
-    let imageIndex = 0;
     Object.values(CAFE_LINES).forEach(line => {
       const chapter = document.createElement("section");
       chapter.className = `menu-chapter menu-chapter--${line.key}`;
@@ -376,8 +407,7 @@
       const productsWrap = document.createElement("div");
       productsWrap.className = "chapter-products";
       productsByLine[line.key].forEach((product, productIndex) => {
-        productsWrap.append(createMenuProduct(product, productIndex, imageIndex));
-        imageIndex += 1;
+        productsWrap.append(createMenuProduct(product, productIndex));
       });
       chapter.append(chapterHead, productsWrap);
       fragment.append(chapter);
@@ -386,7 +416,7 @@
     elements.menuChapters.replaceChildren(fragment);
   }
 
-  function createMenuProduct(product, index, imageIndex) {
+  function createMenuProduct(product, index) {
     const article = document.createElement("article");
     article.className = `menu-product${index % 2 ? " menu-product--reverse" : ""}`;
     article.dataset.code = product.code;
@@ -400,8 +430,8 @@
     image.width = 1254;
     image.height = 1254;
     image.sizes = "(max-width: 480px) calc(100vw - 34px), 446px";
-    image.loading = imageIndex < 2 ? "eager" : "lazy";
-    if ("fetchPriority" in image) image.fetchPriority = imageIndex < 2 ? "high" : "low";
+    image.loading = "lazy";
+    if ("fetchPriority" in image) image.fetchPriority = "low";
     image.decoding = "async";
     setImage(image, product.image, `تصویر ${product.name}`);
     figure.append(image);
@@ -431,12 +461,15 @@
     return article;
   }
 
+  function ensureMenuBuilt() {
+    if (menuBuilt) return;
+    buildMenu();
+    menuBuilt = true;
+  }
+
   function openMenu(origin = state.currentScreen) {
     if (state.screenTransitioning) return;
-    if (!menuBuilt) {
-      buildMenu();
-      menuBuilt = true;
-    }
+    ensureMenuBuilt();
     renderRandomShowcase(elements.menuCoverImages);
     state.previousScreenBeforeMenu = origin === "menuScreen" ? "homeScreen" : origin;
     showScreen("menuScreen", elements.menuTitle);
@@ -479,6 +512,7 @@
   }
 
   initMotionBudget();
-  renderRandomShowcase(elements.homeShowcaseImages);
+  renderInitialShowcase();
   bindEvents();
+  if (!navigator.connection?.saveData) deferNonCriticalWork(ensureMenuBuilt);
 })();
