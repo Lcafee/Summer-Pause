@@ -10,7 +10,8 @@
   <link rel="icon" href="assets/brand/lcafe-logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:wght@700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:wght@700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:wght@700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="assets/css/styles.css">
   <title>Find Your Summer Pause | L Cafe</title>
 </head>
@@ -21,9 +22,9 @@
     <main id="mainContent" tabindex="-1">
       <section class="screen home-screen is-active" id="homeScreen" aria-labelledby="homeTitle">
         <div class="home-backdrop" aria-hidden="true">
-          <figure class="home-frame home-frame--one"><img id="homeImageA" alt="" width="1254" height="1254" fetchpriority="high" decoding="async"></figure>
-          <figure class="home-frame home-frame--two"><img id="homeImageB" alt="" width="1254" height="1254" fetchpriority="low" decoding="async"></figure>
-          <figure class="home-frame home-frame--three"><img id="homeImageC" alt="" width="1254" height="1254" fetchpriority="low" decoding="async"></figure>
+          <figure class="home-frame home-frame--one"><img id="homeImageA" alt="" width="1254" height="1254" sizes="(max-width: 480px) 88vw, 422px" fetchpriority="high" decoding="async"></figure>
+          <figure class="home-frame home-frame--two"><img id="homeImageB" alt="" width="1254" height="1254" sizes="(max-width: 480px) 44vw, 211px" loading="lazy" fetchpriority="low" decoding="async"></figure>
+          <figure class="home-frame home-frame--three"><img id="homeImageC" alt="" width="1254" height="1254" sizes="(max-width: 480px) 42vw, 202px" loading="lazy" fetchpriority="low" decoding="async"></figure>
           <div class="home-light"></div>
         </div>
 
@@ -52,8 +53,8 @@
 
       <section class="screen quiz-screen" id="quizScreen" aria-labelledby="questionTitle" hidden>
         <div class="quiz-scene" aria-hidden="true">
-          <img class="quiz-scene-image quiz-scene-image--a" id="quizSceneImageA" alt="" width="1254" height="1254" decoding="async">
-          <img class="quiz-scene-image quiz-scene-image--b" id="quizSceneImageB" alt="" width="1254" height="1254" decoding="async">
+          <img class="quiz-scene-image quiz-scene-image--a" id="quizSceneImageA" alt="" width="1254" height="1254" sizes="(max-width: 480px) 78vw, 374px" decoding="async">
+          <img class="quiz-scene-image quiz-scene-image--b" id="quizSceneImageB" alt="" width="1254" height="1254" sizes="(max-width: 480px) 72vw, 346px" decoding="async">
           <div class="quiz-scene-shade"></div>
         </div>
 
@@ -73,7 +74,7 @@
       </section>
 
       <section class="screen reveal-screen" id="revealScreen" aria-labelledby="revealTitle" hidden>
-        <div class="reveal-image-wrap" aria-hidden="true"><img id="revealImage" alt="" width="1254" height="1254" decoding="async"></div>
+        <div class="reveal-image-wrap" aria-hidden="true"><img id="revealImage" alt="" width="1254" height="1254" sizes="(max-width: 480px) 100vw, 480px" decoding="async"></div>
         <div class="reveal-mask" aria-hidden="true"></div>
         <div class="reveal-copy">
           <p dir="ltr">YOUR PAUSE IS READY</p>
@@ -84,7 +85,7 @@
       <section class="screen result-screen" id="resultScreen" aria-labelledby="resultName" hidden>
         <div class="result-hero">
           <div class="result-backdrop" aria-hidden="true">
-            <img class="result-image" id="resultImage" alt="" width="1254" height="1254" fetchpriority="high" decoding="async">
+            <img class="result-image" id="resultImage" alt="" width="1254" height="1254" sizes="(max-width: 480px) 100vw, 480px" fetchpriority="high" decoding="async">
             <div class="result-aura"></div>
             <div class="result-film"></div>
           </div>
@@ -130,7 +131,7 @@
             <span aria-hidden="true">Encore</span>
           </header>
           <div class="encore-stage">
-            <figure class="encore-visual"><img id="encoreImage" alt="" width="1254" height="1254" loading="lazy" decoding="async"></figure>
+            <figure class="encore-visual"><img id="encoreImage" alt="" width="1254" height="1254" sizes="(max-width: 480px) calc(100vw - 84px), 396px" loading="lazy" decoding="async"></figure>
             <div class="encore-copy">
               <div class="encore-meta"><span id="encoreLine">فراپه</span><strong id="encorePrice">۳۷۰٬۰۰۰ تومان</strong></div>
               <h3 id="encoreName">فراپه ارده</h3>
@@ -150,9 +151,9 @@
       <section class="screen menu-screen" id="menuScreen" aria-labelledby="menuTitle" hidden>
         <div class="menu-cover">
           <div class="menu-cover-gallery" aria-hidden="true">
-            <figure class="menu-cover-frame menu-cover-frame--one"><img id="menuCoverImageA" alt="" width="1254" height="1254" decoding="async"></figure>
-            <figure class="menu-cover-frame menu-cover-frame--two"><img id="menuCoverImageB" alt="" width="1254" height="1254" decoding="async"></figure>
-            <figure class="menu-cover-frame menu-cover-frame--three"><img id="menuCoverImageC" alt="" width="1254" height="1254" decoding="async"></figure>
+            <figure class="menu-cover-frame menu-cover-frame--one"><img id="menuCoverImageA" alt="" width="1254" height="1254" sizes="(max-width: 480px) 74vw, 355px" decoding="async"></figure>
+            <figure class="menu-cover-frame menu-cover-frame--two"><img id="menuCoverImageB" alt="" width="1254" height="1254" sizes="(max-width: 480px) 58vw, 278px" loading="lazy" decoding="async"></figure>
+            <figure class="menu-cover-frame menu-cover-frame--three"><img id="menuCoverImageC" alt="" width="1254" height="1254" sizes="(max-width: 480px) 70vw, 336px" loading="lazy" decoding="async"></figure>
             <div class="menu-cover-shade"></div>
           </div>
 
@@ -175,6 +176,12 @@
         <footer class="menu-footer"><img src="assets/brand/lcafe-logo.svg" alt="L Cafe — Your Daily Pause" width="120" height="58" loading="lazy" decoding="async"><p dir="ltr">FIND YOUR SUMMER PAUSE</p><button type="button" id="menuQuizButton">پیدا کردن نوشیدنی من</button></footer>
       </section>
     </main>
+
+    <div class="transition-brand" aria-hidden="true">
+      <svg viewBox="8 12 44 60" focusable="false">
+        <path d="M 24.578125 15.261719 C 24.578125 24.546875 24.488281 23.8125 24.414062 33.097656 C 24.34375 41.796875 24.257812 51.75 24.152344 62.957031 C 24.132812 65.070312 24.085938 67.1875 24.089844 69.304688 C 24.867188 69.21875 25.640625 69.132812 26.417969 69.046875 C 26.386719 64.195312 25.316406 58.125 22.746094 53.96875 C 21.121094 51.339844 18.703125 48.667969 15.625 47.792969 C 13.488281 47.1875 10.808594 47.789062 9.714844 49.894531 C 9.074219 51.125 9.695312 52.183594 10.753906 52.894531 C 12.335938 53.957031 14.390625 54.386719 16.222656 54.753906 C 18.941406 55.296875 21.707031 55.605469 24.464844 55.84375 C 30.777344 56.390625 37.125 56.535156 43.457031 56.558594 C 47.253906 56.574219 45.484375 56.546875 49.28125 56.429688 C 49.75 56.414062 50.597656 56.292969 50.804688 55.773438 C 50.988281 55.308594 50.644531 54.988281 50.152344 55.003906 C 41.828125 55.265625 39.03125 55.222656 30.710938 54.785156 C 25.644531 54.519531 20.375 54.265625 15.460938 52.898438 C 14.289062 52.574219 12.605469 52.132812 11.945312 51.085938 C 11.5 50.382812 12.121094 49.179688 12.980469 49 C 13.894531 48.808594 15.210938 49.476562 16.050781 50.007812 C 17.550781 50.960938 18.792969 52.308594 19.824219 53.742188 C 22.789062 57.855469 24.058594 64.285156 24.089844 69.304688 C 24.097656 70.34375 26.421875 69.886719 26.417969 69.046875 C 26.402344 63.179688 26.53125 56.054688 26.582031 50.191406 C 26.679688 39.292969 26.773438 39.667969 26.84375 28.773438 C 26.875 24.183594 26.90625 19.59375 26.90625 15.003906 C 26.90625 13.964844 24.578125 14.417969 24.578125 15.261719"></path>
+      </svg>
+    </div>
 
     <div class="sr-status" id="screenReaderStatus" role="status" aria-live="polite"></div>
   </div>

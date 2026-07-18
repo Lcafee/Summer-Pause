@@ -8,6 +8,7 @@
     resultCode: null,
     previousScreenBeforeMenu: "homeScreen",
     transitioning: false,
+    screenTransitioning: false,
     reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches
   };
 
@@ -18,6 +19,9 @@
     revealScreen: document.getElementById("revealScreen"),
     resultScreen: document.getElementById("resultScreen"),
     menuScreen: document.getElementById("menuScreen"),
+    homeBackdrop: document.querySelector(".home-backdrop"),
+    quizScene: document.querySelector(".quiz-scene"),
+    menuCoverGallery: document.querySelector(".menu-cover-gallery"),
     homeShowcaseImages: [document.getElementById("homeImageA"), document.getElementById("homeImageB"), document.getElementById("homeImageC")],
     menuCoverImages: [document.getElementById("menuCoverImageA"), document.getElementById("menuCoverImageB"), document.getElementById("menuCoverImageC")],
     startQuizButton: document.getElementById("startQuizButton"),
@@ -64,7 +68,12 @@
   let announceTimer = 0;
   let transitionTimer = 0;
   let revealTimer = 0;
+  let screenExitTimer = 0;
+  let screenUnlockTimer = 0;
   let menuBuilt = false;
+  const SCREEN_EXIT_DURATION = 160;
+  const SCREEN_ENTER_DURATION = 360;
+  const RESPONSIVE_IMAGE_PATTERN = /\.webp$/i;
 
   function toPersianDigits(value) {
     return String(value).replace(/\d/g, digit => "۰۱۲۳۴۵۶۷۸۹"[Number(digit)]);
@@ -80,8 +89,18 @@
     const nextSource = source || DEFAULT_PRODUCT_IMAGE;
     imageElement.onerror = () => {
       imageElement.onerror = null;
+      imageElement.removeAttribute("srcset");
       imageElement.src = DEFAULT_PRODUCT_IMAGE;
     };
+
+    if (RESPONSIVE_IMAGE_PATTERN.test(nextSource)) {
+      const baseSource = nextSource.replace(RESPONSIVE_IMAGE_PATTERN, "");
+      const nextSrcset = `${baseSource}-640.webp 640w, ${baseSource}-960.webp 960w, ${nextSource} 1254w`;
+      if (imageElement.getAttribute("srcset") !== nextSrcset) imageElement.srcset = nextSrcset;
+    } else {
+      imageElement.removeAttribute("srcset");
+    }
+
     if (imageElement.getAttribute("src") !== nextSource) imageElement.src = nextSource;
     imageElement.alt = altText !== undefined && altText !== null ? altText : "تصویر نوشیدنی L Cafe";
   }
@@ -98,10 +117,22 @@
   function renderRandomShowcase(imageElements) {
     randomProducts(imageElements.length).forEach((product, index) => {
       const image = imageElements[index];
-      image.loading = "eager";
+      image.loading = index === 0 ? "eager" : "lazy";
       if ("fetchPriority" in image) image.fetchPriority = index === 0 ? "high" : "low";
       setImage(image, product.image, "");
     });
+  }
+
+  function initMotionBudget() {
+    if (state.reducedMotion || !("IntersectionObserver" in window)) return;
+    const motionRegions = [elements.homeBackdrop, elements.quizScene, elements.menuCoverGallery].filter(Boolean);
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.target.classList.toggle("is-motion-paused", !entry.isIntersecting));
+    }, { rootMargin: "80px" });
+    motionRegions.forEach(region => observer.observe(region));
+    document.addEventListener("visibilitychange", () => {
+      document.documentElement.classList.toggle("is-document-hidden", document.hidden);
+    }, { passive: true });
   }
 
   function announce(message) {
@@ -127,15 +158,59 @@
   }
 
   function showScreen(screenId, focusTarget) {
-    elements.screens.forEach(screen => {
-      const active = screen.id === screenId;
-      screen.hidden = !active;
-      screen.classList.toggle("is-active", active);
-      screen.setAttribute("aria-hidden", String(!active));
-    });
-    state.currentScreen = screenId;
-    window.scrollTo({ top: 0, behavior: state.reducedMotion ? "auto" : "smooth" });
-    if (focusTarget) window.setTimeout(() => focusTarget.focus({ preventScroll: true }), state.reducedMotion ? 0 : 80);
+    const nextScreen = elements.screens.find(screen => screen.id === screenId);
+    const currentScreen = elements.screens.find(screen => !screen.hidden);
+    if (!nextScreen) return;
+
+    const focusNextScreen = () => {
+      if (focusTarget) window.setTimeout(() => focusTarget.focus({ preventScroll: true }), state.reducedMotion ? 0 : 80);
+    };
+
+    const activateNextScreen = () => {
+      elements.screens.forEach(screen => {
+        const active = screen === nextScreen;
+        screen.hidden = !active;
+        screen.classList.remove("is-active", "is-leaving");
+        screen.setAttribute("aria-hidden", String(!active));
+      });
+      window.scrollTo({ top: 0, behavior: "auto" });
+      nextScreen.hidden = false;
+      void nextScreen.offsetWidth;
+      nextScreen.classList.add("is-active");
+      state.currentScreen = screenId;
+      focusNextScreen();
+
+      window.clearTimeout(screenUnlockTimer);
+      screenUnlockTimer = window.setTimeout(() => {
+        screenUnlockTimer = 0;
+        state.screenTransitioning = false;
+        document.documentElement.classList.remove("is-screen-transitioning");
+      }, state.reducedMotion ? 0 : SCREEN_ENTER_DURATION);
+    };
+
+    window.clearTimeout(screenExitTimer);
+    window.clearTimeout(screenUnlockTimer);
+
+    if (!currentScreen || state.reducedMotion) {
+      activateNextScreen();
+      return;
+    }
+
+    if (currentScreen === nextScreen) {
+      state.screenTransitioning = true;
+      document.documentElement.classList.add("is-screen-transitioning");
+      activateNextScreen();
+      return;
+    }
+
+    state.screenTransitioning = true;
+    document.documentElement.classList.add("is-screen-transitioning");
+    currentScreen.classList.remove("is-active");
+    currentScreen.classList.add("is-leaving");
+    screenExitTimer = window.setTimeout(() => {
+      screenExitTimer = 0;
+      activateNextScreen();
+    }, SCREEN_EXIT_DURATION);
   }
 
   function renderQuizStep() {
@@ -191,6 +266,7 @@
   }
 
   function startQuiz() {
+    if (state.screenTransitioning) return;
     cancelPendingFlow();
     state.quizStep = 1;
     state.selectedLine = null;
@@ -199,6 +275,7 @@
   }
 
   function goBackFromQuiz() {
+    if (state.screenTransitioning) return;
     cancelPendingFlow();
     if (state.quizStep === 2) {
       state.quizStep = 1;
@@ -322,6 +399,7 @@
     const image = document.createElement("img");
     image.width = 1254;
     image.height = 1254;
+    image.sizes = "(max-width: 480px) calc(100vw - 34px), 446px";
     image.loading = imageIndex < 2 ? "eager" : "lazy";
     if ("fetchPriority" in image) image.fetchPriority = imageIndex < 2 ? "high" : "low";
     image.decoding = "async";
@@ -354,6 +432,7 @@
   }
 
   function openMenu(origin = state.currentScreen) {
+    if (state.screenTransitioning) return;
     if (!menuBuilt) {
       buildMenu();
       menuBuilt = true;
@@ -365,6 +444,7 @@
   }
 
   function closeMenu() {
+    if (state.screenTransitioning) return;
     const target = state.previousScreenBeforeMenu === "resultScreen" ? "resultScreen" : "homeScreen";
     const focusTarget = target === "resultScreen" ? elements.resultMenuButton : elements.openMenuButton;
     if (target === "homeScreen") renderRandomShowcase(elements.homeShowcaseImages);
@@ -373,6 +453,7 @@
   }
 
   function goHome() {
+    if (state.screenTransitioning) return;
     cancelPendingFlow();
     renderRandomShowcase(elements.homeShowcaseImages);
     showScreen("homeScreen", elements.startQuizButton);
@@ -390,12 +471,14 @@
     elements.menuQuizButton.addEventListener("click", startQuiz);
     window.addEventListener("keydown", event => {
       if (event.key !== "Escape") return;
+      if (state.screenTransitioning) return;
       if (state.currentScreen === "menuScreen") closeMenu();
       else if (state.currentScreen === "quizScreen") goBackFromQuiz();
       else if (state.currentScreen === "resultScreen") goHome();
     });
   }
 
+  initMotionBudget();
   renderRandomShowcase(elements.homeShowcaseImages);
   bindEvents();
 })();

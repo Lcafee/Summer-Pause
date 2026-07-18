@@ -15,6 +15,9 @@
   --glass-border-soft: rgba(255,255,255,.24);
   --glass-shadow: 0 22px 48px rgba(12,1,4,.16), inset 0 1px 0 rgba(255,255,255,.38), inset 0 -1px 0 rgba(255,255,255,.07);
   --glass-filter: blur(18px) saturate(160%) brightness(1.07) contrast(1.03);
+  --screen-enter-duration: 360ms;
+  --screen-exit-duration: 160ms;
+  --transition-wash-duration: 520ms;
   --result-accent: #a9aa62;
   --result-ink: #3a251f;
   --serif: "Libre Baskerville", Georgia, "Times New Roman", serif;
@@ -52,19 +55,77 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   min-height: 100dvh;
   margin: 0 auto;
   position: relative;
-  background: var(--paper);
+  background: var(--wine-deep);
   overflow: hidden;
   overflow: clip;
   box-shadow: 0 0 120px rgba(0, 0, 0, .4);
 }
+.app-shell::after {
+  content: "";
+  position: fixed;
+  z-index: 900;
+  inset: 0 auto 0 50%;
+  width: min(100vw, 480px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) scale(1.025);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(226, 177, 106, .22) 0, rgba(226, 177, 106, .07) 24%, transparent 52%),
+    radial-gradient(circle at 78% 18%, rgba(184, 72, 102, .3) 0, transparent 38%),
+    linear-gradient(145deg, #6b1a32 0%, #47101f 48%, #2d0913 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(214,176,122,.16);
+}
+html.is-screen-transitioning .app-shell::after {
+  will-change: opacity, transform;
+  animation: transition-wash var(--transition-wash-duration) cubic-bezier(.4,0,.2,1) both;
+}
+.transition-brand {
+  position: fixed;
+  z-index: 901;
+  top: 50%;
+  left: 50%;
+  width: 98px;
+  height: 134px;
+  pointer-events: none;
+  opacity: 0;
+  color: #e3bd83;
+  transform: translate(-50%, -50%) scale(.88) rotate(-2deg);
+  transform-origin: 50% 55%;
+}
+.transition-brand svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: currentColor;
+  filter: drop-shadow(0 8px 16px rgba(25,2,8,.32));
+}
+html.is-screen-transitioning .transition-brand {
+  will-change: opacity, transform;
+  animation: transition-brand-reveal var(--transition-wash-duration) cubic-bezier(.4,0,.2,1) both;
+}
 .screen { min-height: 100vh; min-height: 100dvh; position: relative; }
 .screen[hidden] { display: none !important; }
-.screen.is-active { animation: screen-in .42s cubic-bezier(.2,.8,.2,1) both; }
+.screen.is-active { animation: screen-in var(--screen-enter-duration) cubic-bezier(.2,.8,.2,1) both; }
+.screen.is-leaving { animation: screen-out var(--screen-exit-duration) ease-in both; pointer-events: none; }
+html.is-screen-transitioning .screen { pointer-events: none; }
+html.is-screen-transitioning { scroll-behavior: auto; }
 .sr-status { position: fixed; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .noscript { position: fixed; inset: 20px; z-index: 9999; padding: 16px; background: #fff; color: #111; border-radius: 12px; }
 
-@keyframes screen-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes screen-in { from { opacity: 0; transform: translateY(12px) scale(.995); } to { opacity: 1; transform: none; } }
+@keyframes screen-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-4px); } }
+@keyframes transition-wash {
+  0% { opacity: 0; transform: translateX(-50%) scale(1.025); }
+  28%, 36% { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) scale(.992); }
+}
+@keyframes transition-brand-reveal {
+  0%, 17% { opacity: 0; transform: translate(-50%, -50%) scale(.88) rotate(-2deg); }
+  31%, 52% { opacity: .96; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.07) rotate(1deg); }
+}
 @keyframes drift-a { 0%, 100% { transform: translate3d(0,0,0) rotate(-6deg); } 50% { transform: translate3d(0,-8px,0) rotate(-3deg); } }
 @keyframes drift-b { 0%, 100% { transform: translate3d(0,0,0) rotate(8deg); } 50% { transform: translate3d(0,7px,0) rotate(11deg); } }
 @keyframes drift-c { 0%, 100% { transform: translate3d(0,0,0) rotate(-10deg); } 50% { transform: translate3d(0,-6px,0) rotate(-7deg); } }
@@ -73,6 +134,16 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
 @keyframes result-product-rise {
   from { opacity: 0; transform: translate(var(--product-x, 0px), calc(24px + var(--product-y, 0px))) scale(var(--product-scale, 1)); }
   to { opacity: 1; transform: translate(var(--product-x, 0px), var(--product-y, 0px)) scale(var(--product-scale, 1)); }
+}
+
+.home-backdrop.is-motion-paused .home-frame,
+.quiz-scene.is-motion-paused .quiz-scene-image,
+.menu-cover-gallery.is-motion-paused .menu-cover-frame,
+html.is-document-hidden .home-frame,
+html.is-document-hidden .quiz-scene-image,
+html.is-document-hidden .menu-cover-frame,
+html.is-document-hidden .home-light {
+  animation-play-state: paused !important;
 }
 
 .screen-header,
