@@ -189,7 +189,7 @@
     }, delay);
   }
 
-  function showScreen(screenId, focusTarget) {
+  function showScreen(screenId, focusTarget, { forceTransition = false } = {}) {
     const nextScreen = elements.screens.find(screen => screen.id === screenId);
     const currentScreen = elements.screens.find(screen => !screen.hidden);
     if (!nextScreen) return;
@@ -228,7 +228,7 @@
       return;
     }
 
-    if (currentScreen === nextScreen) {
+    if (currentScreen === nextScreen && !forceTransition) {
       activateNextScreen();
       return;
     }
@@ -243,7 +243,7 @@
     }, SCREEN_EXIT_DURATION);
   }
 
-  function renderQuizStep() {
+  function renderQuizStep(withTransition = false) {
     state.transitioning = false;
     const firstStep = state.quizStep === 1;
     const content = firstStep ? QUIZ_CONTENT.first : QUIZ_CONTENT.second[state.selectedLine];
@@ -264,7 +264,7 @@
     });
 
     updateQuizScene();
-    showScreen("quizScreen", elements.questionTitle);
+    showScreen("quizScreen", elements.questionTitle, { forceTransition: withTransition });
     announce(`مرحله ${toPersianDigits(state.quizStep)} از ۲. ${content.question}`);
   }
 
@@ -289,7 +289,7 @@
       state.selectedLine = answer.line;
       state.quizStep = 2;
       productsByLine[answer.line].forEach(product => warmImage(product.image));
-      scheduleTransition(renderQuizStep, state.reducedMotion ? 0 : 170);
+      scheduleTransition(() => renderQuizStep(true), state.reducedMotion ? 0 : 170);
       return;
     }
     state.resultCode = answer.resultCode;
