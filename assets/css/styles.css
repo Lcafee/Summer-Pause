@@ -81,7 +81,9 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
     radial-gradient(circle at 18% 78%, rgba(32, 5, 13, .32), transparent 44%),
     linear-gradient(155deg, #5a1629 0%, #450e1e 52%, #310914 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
-  clip-path: inset(100% 0 0 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 102%, 0);
 }
 .transition-pattern__grid {
   position: relative;
@@ -89,8 +91,10 @@ button:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible { outline: 
   width: 100%;
   height: 100%;
   opacity: 0;
-  background: url("../brand/lcafe-transition-pattern.svg") 50% 0 / 200px 200px repeat;
-  clip-path: inset(100% 0 0 0);
+  background: url("../brand/lcafe-transition-pattern.svg?v=20260719-mobile-transition") 50% 0 / 200px 200px repeat;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 102%, 0);
 }
 .transition-pattern__label {
   position: absolute;
@@ -110,11 +114,11 @@ html.is-screen-transitioning .transition-pattern {
   visibility: visible;
 }
 html.is-screen-transitioning .transition-pattern::before {
-  will-change: clip-path, transform;
+  will-change: transform;
   animation: transition-pattern-curtain 980ms cubic-bezier(.76,0,.24,1) both;
 }
 html.is-screen-transitioning .transition-pattern__grid {
-  will-change: clip-path, transform;
+  will-change: transform, opacity;
   animation:
     transition-pattern-curtain 980ms cubic-bezier(.76,0,.24,1) both,
     transition-pattern-field 980ms cubic-bezier(.4,0,.2,1) both;
@@ -135,9 +139,9 @@ html.is-screen-transitioning { scroll-behavior: auto; }
 @keyframes screen-in { from { opacity: 0; transform: translateY(12px) scale(.995); } to { opacity: 1; transform: none; } }
 @keyframes screen-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-4px); } }
 @keyframes transition-pattern-curtain {
-  0% { clip-path: inset(100% 0 0 0); transform: translateY(2%) scale(1.01); }
-  34%, 64% { clip-path: inset(0 0 0 0); transform: none; }
-  100% { clip-path: inset(0 0 100% 0); transform: translateY(-2%) scale(1.01); }
+  0% { transform: translate3d(0, 102%, 0); }
+  34%, 64% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(0, -102%, 0); }
 }
 @keyframes transition-pattern-field {
   0% { opacity: 0; background-position: 50% 18px; }
