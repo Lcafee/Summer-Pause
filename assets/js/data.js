@@ -57,6 +57,12 @@ const CAFE_PRODUCTS = [
     tags: ["هلویی", "تابستان گرم", "متعادل"]
   },
   {
+    code: "RF-01", line: "refresher", name: "رفرشر توت‌فرنگی و گیلاس", en: "Strawberry & Cherry Refresher",
+    image: "assets/images/rf-01.webp", price: 320000, mood: "Berry · Tart · Sparkling",
+    description: "ترکیب توت‌فرنگی و گیلاس با سودا؛ نوشیدنی‌ای ملس، میوه‌ای و پرطراوت با رنگی درخشان، برای روزهای گرم و لحظه‌هایی که یک خنکی شاد و سرزنده می‌خواهی.",
+    tags: ["توت‌فرنگی", "گیلاس", "ملس"]
+  },
+  {
     code: "RF-02", line: "refresher", name: "رفرشر انبه و شاهتوت", en: "Mango & Blackberry Refresher",
     image: "assets/images/rf-02.webp", price: 320000, mood: "Tropical · Fruity · Sparkling",
     description: "ترکیب انبه و شاهتوت با سودا؛ نوشیدنی‌ای ملس، خنک و سرزنده با طعمی میوه‌ای، مناسب روزهای گرم و لحظه‌هایی که دنبال یک انتخاب شادتر هستی.",
@@ -73,6 +79,12 @@ const CAFE_PRODUCTS = [
     image: "assets/images/cl-01.webp", price: 430000, mood: "Soft · Creamy · Gentle Espresso",
     description: "کلودی پسته با بافتی نرم و کرمی؛ ترکیبی از طعم اصیل پسته و حضور ملایم اسپرسو که به نوشیدنی عمق، تعادل و لطافتی آرام می‌دهد.",
     tags: ["پسته", "کرمی", "اسپرسو آرام"]
+  },
+  {
+    code: "CL-02", line: "cloudy", name: "کلودی زعفران", en: "Saffron Cloudy",
+    image: "assets/images/cl-02.webp", price: 430000, mood: "Golden · Creamy · Gentle Espresso",
+    description: "کلودی زعفران با لایه‌ای نرم و کرمی از زعفران؛ ترکیبی خوش‌عطر و طلایی با حضور ملایم اسپرسو که طعمی گرم، لطیف و متعادل می‌سازد.",
+    tags: ["زعفران", "کرمی", "اسپرسو آرام"]
   },
   {
     code: "CL-03", line: "cloudy", name: "کلودی کوکی", en: "Cookie Cloudy",
@@ -118,6 +130,7 @@ const QUIZ_CONTENT = {
       caption: "CHOOSE THE NOTE",
       question: "این حس میوه‌ای چه نوتی داشته باشه؟",
       answers: [
+        { label: "ملس و میوه‌ای", resultCode: "RF-01" },
         { label: "پرطراوت و استوایی", resultCode: "RF-02" },
         { label: "معطر و متفاوت", resultCode: "RF-03" }
       ]
@@ -127,6 +140,7 @@ const QUIZ_CONTENT = {
       question: "این حس ابری چه نوتی داشته باشه؟",
       answers: [
         { label: "لوکس و اصیل", resultCode: "CL-01" },
+        { label: "خوش‌عطر و طلایی", resultCode: "CL-02" },
         { label: "تضاد لطافت و تردی", resultCode: "CL-03" }
       ]
     },
