@@ -83,7 +83,7 @@ const CAFE_PRODUCTS = [
   {
     code: "CL-02", line: "cloudy", name: "کلودی زعفران", en: "Saffron Cloudy",
     image: "assets/images/cl-02.webp", price: 430000, mood: "Golden · Creamy · Gentle Espresso",
-    description: "کلودی زعفران با لایه‌ای نرم و کرمی از زعفران؛ ترکیبی خوش‌عطر و طلایی با حضور ملایم اسپرسو که طعمی گرم، لطیف و متعادل می‌سازد.",
+    description: "کلودی زعفران با لایه‌ای نرم و کرمی از زعفران؛ ترکیبی لوکس و طلایی با حضور ملایم اسپرسو که طعمی گرم، لطیف و متعادل می‌سازد.",
     tags: ["زعفران", "کرمی", "اسپرسو آرام"]
   },
   {
@@ -111,7 +111,7 @@ const QUIZ_CONTENT = {
     caption: "CHOOSE THE FEELING",
     question: "الان از نوشیدنی‌ات چه جور حسی می‌خوای؟",
     answers: [
-      { label: "خوش‌عطر و شفاف", line: "herbaltea" },
+      { label: "متفاوت و شفاف", line: "herbaltea" },
       { label: "میوه‌ای و سرزنده", line: "refresher" },
       { label: "ابری و لطیف", line: "cloudy" },
       { label: "برفی و شیرین", line: "frappe" }
@@ -122,15 +122,15 @@ const QUIZ_CONTENT = {
       caption: "CHOOSE THE NOTE",
       question: "این حس خوش‌عطر چه نوتی داشته باشه؟",
       answers: [
-        { label: "آرام و گرم", resultCode: "IT-01" },
-        { label: "پرانرژی و ملس", resultCode: "IT-02" }
+        { label: "آرام و شیرین", resultCode: "IT-01" },
+        { label: "پرانرژی و گس", resultCode: "IT-02" }
       ]
     },
     refresher: {
       caption: "CHOOSE THE NOTE",
       question: "این حس میوه‌ای چه نوتی داشته باشه؟",
       answers: [
-        { label: "ملس و میوه‌ای", resultCode: "RF-01" },
+        { label: "ترش‌وشیرین و درخشان", resultCode: "RF-01" },
         { label: "پرطراوت و استوایی", resultCode: "RF-02" },
         { label: "معطر و متفاوت", resultCode: "RF-03" }
       ]
@@ -140,7 +140,7 @@ const QUIZ_CONTENT = {
       question: "این حس ابری چه نوتی داشته باشه؟",
       answers: [
         { label: "لوکس و اصیل", resultCode: "CL-01" },
-        { label: "خوش‌عطر و طلایی", resultCode: "CL-02" },
+        { label: "ایرانی و طلایی", resultCode: "CL-02" },
         { label: "تضاد لطافت و تردی", resultCode: "CL-03" }
       ]
     },
