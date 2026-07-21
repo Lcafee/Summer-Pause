@@ -1409,3 +1409,30 @@ html.is-document-hidden .home-light {
   transform: translateY(1px);
   box-shadow: 0 7px 18px rgba(18,1,5,.18), inset 0 1px 0 rgba(255,255,255,.18);
 }
+
+/* First-screen spacing and alignment polish */
+.menu-top--cover { padding-inline: 16px; }
+.menu-top--cover .icon-button { grid-column: 1; }
+.menu-top--cover .mini-logo { grid-column: 2; }
+.menu-top--cover .season-mark { grid-column: 3; justify-self: end; }
+.menu-cover { min-height: clamp(700px, 100dvh, 780px); }
+.menu-cover-frame--three { top: 32%; width: 68%; right: 2%; }
+.menu-intro.menu-intro--compact { margin-inline: 16px; }
+.menu-intro--compact .menu-intro-quiz {
+  border-color: rgba(248,218,179,.52);
+  box-shadow: 0 12px 28px rgba(18,1,5,.2), inset 0 1px 0 rgba(255,255,255,.24), 0 0 0 1px rgba(248,218,179,.05);
+}
+
+@media (max-height: 700px) {
+  .menu-cover { min-height: 660px; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .menu-cover { min-height: 620px; }
+}
+
+@media (max-width: 350px) {
+  .menu-intro.menu-intro--compact { padding: 16px; }
+  .menu-intro--compact .menu-intro-fa { font-size: 17px; }
+  .menu-cover-frame--three { top: 34%; width: 70%; right: 0; }
+}
